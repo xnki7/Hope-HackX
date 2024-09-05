@@ -12,7 +12,7 @@ import {
 import { ConnectButton } from "@rainbow-me/rainbowkit";
 import logo from "../../../public/hope-logo.svg";
 
-export default function AppNavbar() {
+export default function AppNavbar({setCreateProfileModal, createProfileModal}) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [activeItem, setActiveItem] = useState("Active Incidents"); // Default active item
 
@@ -20,28 +20,33 @@ export default function AppNavbar() {
 
   const handleItemClick = (item) => {
     setActiveItem(item);
+    if(item == "Profile"){
+      console.log("hello")
+      setCreateProfileModal(true);
+      console.log(createProfileModal)
+    }
   };
 
   return (
-    <Navbar onMenuOpenChange={setIsMenuOpen} maxWidth="full">
+    <Navbar className="h-20" onMenuOpenChange={setIsMenuOpen} maxWidth="full">
       <NavbarContent>
         <NavbarMenuToggle
           aria-label={isMenuOpen ? "Close menu" : "Open menu"}
           className="sm:hidden"
         />
         <NavbarBrand>
-          <img src={logo} className="h-12 w-12 mr-2" alt="" />
-          <p className="font-bold text-inherit">Hope</p>
+          <img src={logo} className="h-16 w-16 mr-2" alt="" />
+          <p className="font-bold text-xl text-inherit">Hope</p>
         </NavbarBrand>
       </NavbarContent>
 
-      <NavbarContent className="hidden sm:flex gap-4" justify="center">
+      <NavbarContent className="hidden sm:flex gap-8" justify="center">
         {menuItems.map((item, index) => (
           <NavbarItem key={index} isActive={activeItem === item}>
             <Link
               color={activeItem === item ? "primary" : "foreground"}
               href="#"
-              onClick={() => handleItemClick(item)}
+              onPress={() => handleItemClick(item)}
             >
               {item}
             </Link>
@@ -51,7 +56,7 @@ export default function AppNavbar() {
 
       <NavbarContent justify="end">
         <NavbarItem>
-          <ConnectButton />
+          <ConnectButton showBalance={false} label="Sign in" />
         </NavbarItem>
       </NavbarContent>
 
@@ -63,7 +68,7 @@ export default function AppNavbar() {
               className="w-full"
               href="#"
               size="lg"
-              onClick={() => handleItemClick(item)}
+              onPress={() => handleItemClick(item)}
             >
               {item}
             </Link>
