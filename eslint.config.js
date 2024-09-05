@@ -35,5 +35,6 @@ export default [
       ],
       'react/prop-types': 'off'
     },
+    extends: ["eslint:recommended", "plugin:react/recommended", "plugin:prettier/recommended"]
   },
 ]
