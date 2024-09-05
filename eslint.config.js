@@ -33,6 +33,8 @@ export default [
         'warn',
         { allowConstantExport: true },
       ],
+      'react/prop-types': 'off'
     },
+    extends: ["eslint:recommended", "plugin:react/recommended", "plugin:prettier/recommended"]
   },
 ]
