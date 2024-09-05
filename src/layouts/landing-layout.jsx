@@ -1,12 +1,13 @@
-import AppNavbar from "../components/appNavbar/appNavbar";
+import { Outlet } from 'react-router-dom';
+import AppNavbar from '../components/appNavbar/appNavbar';
 
-const LandingLayout = ({ children }) => {
-  return (
-    <div>
-      <AppNavbar />
-      {children}
-    </div>
-  );
+const LandingLayout = () => {
+    return (
+        <div>
+            <AppNavbar />
+            <Outlet />
+        </div>
+    );
 };
 
 export default LandingLayout;
