@@ -1,4 +1,4 @@
-import CampaignCard from "../components/campaign-card/campaign-card"
+import CampaignCard from "../../components/campaign-card/campaign-card"
 
 const CampaignsPage = () => {
   return (

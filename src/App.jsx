@@ -1,6 +1,6 @@
 import { Route, Routes } from 'react-router-dom';
 import LandingLayout from './layouts/landing-layout.jsx';
-import CampaignsPage from './pages/campaigns-page.jsx';
+import CampaignsPage from './pages/campaigns-page/campaigns-page.jsx';
 import Homepage from './pages/homepage/homepage.jsx';
 import ReportIncident from './pages/reportIncident/reportIncident.jsx';
 import { useState, useEffect } from 'react';
@@ -9,6 +9,7 @@ import { getEthersProvider } from './providerEthers.ts';
 import { config } from './config';
 import {ethers} from "ethers"
 import { contractAddress, contractAbi } from '../constants.js';
+import CampaignDetail from './pages/campaign-detail/campaign-detail.jsx';
 import CreateProfile from './pages/createProfile/createProfile.jsx';
 
 function App() {
@@ -56,9 +57,9 @@ function App() {
         loadChain();
     },[]);
 
-    return (
-        <Routes>
-            <Route
+      return (
+            <Routes>
+                  <Route
                 element={
                     <LandingLayout
                         setCreateProfileModal={setCreateProfileModal}
@@ -68,17 +69,20 @@ function App() {
                 }
                 path="/"
             >
-                <Route element={<Homepage />} path="/" />
-                <Route element={<CampaignsPage />} path="/campaigns" />
+                        <Route element={<Homepage />} path="/" />
+                        <Route element={<CampaignsPage />} path="/campaigns" />
+                        <Route element={<CampaignDetail />} path="/c/:campaignId" />
                 <Route
                     element={
                         <ReportIncident contractInstance={contractInstance} />
                     }
                     path="/reportIncident"
                 />
-            </Route>
-        </Routes>
-    );
+                  </Route>
+            </Routes>
+      );
+            
+    
 }
 
 export default App;
