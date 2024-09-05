@@ -30,7 +30,7 @@ const CreateProfile = ({ setCreateProfileModal, createProfileModal }) => {
         <>
             {createProfileModal ? (
                 <form onSubmit={handleSubmit}>
-                    <div className="fixed inset-0 bg-black/60 flex justify-center items-center">
+                    <div className="fixed inset-0 bg-black/60 flex justify-center items-center z-50">
                         <div className="bg-white w-[90%] sm:w-[40rem] m-auto rounded-lg p-5">
                             <div className="flex justify-between items-start mt-3">
                                 <div>

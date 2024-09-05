@@ -1,6 +1,6 @@
 import { Route, Routes } from 'react-router-dom';
 import LandingLayout from './layouts/landing-layout.jsx';
-import CampaignsPage from './pages/campaigns-page.jsx';
+import CampaignsPage from './pages/campaigns-page/campaigns-page.jsx';
 import Homepage from './pages/homepage/homepage.jsx';
 import ReportIncident from './pages/reportIncident/reportIncident.jsx';
 import { useState, useEffect } from 'react';
@@ -9,6 +9,7 @@ import { getEthersProvider } from './providerEthers.ts';
 import { config } from './config';
 import {ethers} from "ethers"
 import { contractAddress, contractAbi } from '../constants.js';
+import CampaignDetail from './pages/campaign-detail/campaign-detail.jsx';
 
 function App() {
     const [signer, setSigner] = useState(null);
