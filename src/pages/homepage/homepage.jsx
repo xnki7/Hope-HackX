@@ -12,7 +12,7 @@ function Homepage() {
         };
     }, []);
 
-    return <Carousel />;
+    return <Carousel/>;
 }
 
 export default Homepage;
