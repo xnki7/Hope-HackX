@@ -10,6 +10,7 @@ import { getEthersProvider } from './providerEthers.ts';
 import { config } from './config';
 import {ethers} from "ethers"
 import { contractAddress, contractAbi } from '../constants.js';
+import CampaignDetail from './pages/campaign-detail/campaign-detail.jsx';
 
 function App() {
     const [signer, setSigner] = useState(null);
@@ -63,6 +64,7 @@ function App() {
                     <LandingLayout
                         setCreateProfileModal={setCreateProfileModal}
                         createProfileModal={createProfileModal}
+                        contractInstance={contractInstance}
                     />
                 }
                 path="/"
@@ -79,6 +81,8 @@ function App() {
                   </Route>
             </Routes>
       );
+            
+    
 }
 
 export default App;

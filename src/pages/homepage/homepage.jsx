@@ -12,4 +12,4 @@ function Homepage() {
     return <Carousel/>;
 }
 
-export default Homepage
+export default Homepage;
