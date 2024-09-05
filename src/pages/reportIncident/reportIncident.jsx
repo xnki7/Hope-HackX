@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import axios from 'axios';
-import { useWriteContract} from 'wagmi';
-import { contractAbi, contractAddress } from '../../../constants';
 import { ethers } from 'ethers';
+import { useWriteContract } from 'wagmi';
+import { contractAbi, contractAddress } from '../../../constants.js';
 
-function ReportIncident({contractInstance}) {
+function ReportIncident({ contractInstance }) {
     const [campaignImage, setCampaignImage] = useState(null);
     const { writeContract } = useWriteContract();
 
@@ -62,17 +62,18 @@ function ReportIncident({contractInstance}) {
                 new Date(data.campaignDeadline).getTime() / 1000
             );
 
-            const tx = await contractInstance.createCampaign(
-                ethers.utils.parseEther(data.campaignAmount),
-                campaignUploadResponse.data.IpfsHash,
-                data.campaignCategory,
-                endTimeUnix
-              );
-              await tx.wait();
+            writeContract({
+                abi: contractAbi,
+                address: contractAddress,
+                functionName: 'createCampaign',
+                args: [
+                    ethers.utils.parseEther(data.campaignAmount),
+                    campaignUploadResponse.data.IpfsHash,
+                    data.campaignCategory,
+                    endTimeUnix,
+                ],
+            });
 
-            console.log("TX is", tx)
-
-            alert('Campaign created ✅');
         } catch (error) {
             console.error('Error in campaign creation:', error);
         }
@@ -99,17 +100,23 @@ function ReportIncident({contractInstance}) {
 
                 {/* Required Fund */}
                 <div className="form-group">
-                    <label>Required Fund (in MATIC) *</label>
-                    <input
-                        type="number"
-                        {...register('campaignAmount', {
-                            required: 'Campaign Amount is required',
-                        })}
-                    />
-                    {errors.campaignAmount && (
-                        <p className="error">{errors.campaignAmount.message}</p>
-                    )}
-                </div>
+    <label>Required Fund (in MATIC) *</label>
+    <input
+        type="number"
+        step="any" // Allows decimal values
+        {...register('campaignAmount', {
+            required: 'Campaign Amount is required',
+            min: {
+                value: 0,
+                message: 'Campaign Amount must be greater than 0',
+            },
+        })}
+    />
+    {errors.campaignAmount && (
+        <p className="error">{errors.campaignAmount.message}</p>
+    )}
+</div>
+
 
                 {/* Campaign Description */}
                 <div className="form-group">
