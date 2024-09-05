@@ -1,11 +1,10 @@
+import Navbar from "./components/navbar/navbar.jsx";
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
-    <>
-      
-    </>
-  )
+    <div>
+      <Navbar/>
+    </div>
+  );
 }
 
-export default App
+export default App;
