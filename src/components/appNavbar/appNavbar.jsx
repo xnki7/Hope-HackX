@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import {
   Navbar,
   NavbarBrand,
@@ -8,7 +8,6 @@ import {
   NavbarMenu,
   NavbarMenuItem,
   Link,
-  Button,
 } from "@nextui-org/react";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
 import logo from "../../../public/hope-logo.svg";
