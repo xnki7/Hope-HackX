@@ -2,7 +2,11 @@ import { createRoot } from "react-dom/client";
 import App from "./App.jsx";
 import "./index.css";
 import "@rainbow-me/rainbowkit/styles.css";
-import { getDefaultConfig, RainbowKitProvider } from "@rainbow-me/rainbowkit";
+import {
+  getDefaultConfig,
+  RainbowKitProvider,
+  lightTheme,
+} from "@rainbow-me/rainbowkit";
 import { WagmiProvider } from "wagmi";
 import { polygonAmoy } from "wagmi/chains";
 import { QueryClientProvider, QueryClient } from "@tanstack/react-query";
@@ -23,7 +27,13 @@ const config = getDefaultConfig({
 createRoot(document.getElementById("root")).render(
   <WagmiProvider config={config}>
     <QueryClientProvider client={queryClient}>
-      <RainbowKitProvider>
+      <RainbowKitProvider
+        theme={lightTheme({
+          accentColor: "#229799",
+          accentColorForeground: "white",
+          borderRadius: "medium",
+        })}
+      >
         <BrowserRouter>
           <Provider store={store}>
             <NextUIProvider>

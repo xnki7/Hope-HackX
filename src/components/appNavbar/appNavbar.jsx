@@ -12,7 +12,7 @@ import {
 import { ConnectButton } from "@rainbow-me/rainbowkit";
 import logo from "../../../public/hope-logo.svg";
 
-export default function AppNavbar() {
+export default function AppNavbar({setCreateProfileModal, createProfileModal}) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [activeItem, setActiveItem] = useState("Active Incidents"); // Default active item
 
@@ -20,6 +20,11 @@ export default function AppNavbar() {
 
   const handleItemClick = (item) => {
     setActiveItem(item);
+    if(item == "Profile"){
+      console.log("hello")
+      setCreateProfileModal(true);
+      console.log(createProfileModal)
+    }
   };
 
   return (
@@ -41,7 +46,7 @@ export default function AppNavbar() {
             <Link
               color={activeItem === item ? "primary" : "foreground"}
               href="#"
-              onClick={() => handleItemClick(item)}
+              onPress={() => handleItemClick(item)}
             >
               {item}
             </Link>
@@ -51,7 +56,7 @@ export default function AppNavbar() {
 
       <NavbarContent justify="end">
         <NavbarItem>
-          <ConnectButton />
+          <ConnectButton showBalance={false} label="Sign in" />
         </NavbarItem>
       </NavbarContent>
 
@@ -63,7 +68,7 @@ export default function AppNavbar() {
               className="w-full"
               href="#"
               size="lg"
-              onClick={() => handleItemClick(item)}
+              onPress={() => handleItemClick(item)}
             >
               {item}
             </Link>

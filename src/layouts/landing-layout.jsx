@@ -1,11 +1,10 @@
 import { Outlet } from "react-router-dom";
 import AppNavbar from "../components/appNavbar/appNavbar";
-import ReportIncident from "../pages/reportIncident/reportIncident";
 
-const LandingLayout = () => {
+const LandingLayout = ({setCreateProfileModal, createProfileModal}) => {
   return (
     <div>
-      <AppNavbar />
+      <AppNavbar setCreateProfileModal={setCreateProfileModal} createProfileModal={createProfileModal}/>
       <Outlet/>
     </div>
   );
