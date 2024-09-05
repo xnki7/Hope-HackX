@@ -28,19 +28,19 @@ export default function AppNavbar({setCreateProfileModal, createProfileModal}) {
   };
 
   return (
-    <Navbar onMenuOpenChange={setIsMenuOpen} maxWidth="full">
+    <Navbar className="h-20" onMenuOpenChange={setIsMenuOpen} maxWidth="full">
       <NavbarContent>
         <NavbarMenuToggle
           aria-label={isMenuOpen ? "Close menu" : "Open menu"}
           className="sm:hidden"
         />
         <NavbarBrand>
-          <img src={logo} className="h-12 w-12 mr-2" alt="" />
-          <p className="font-bold text-inherit">Hope</p>
+          <img src={logo} className="h-16 w-16 mr-2" alt="" />
+          <p className="font-bold text-xl text-inherit">Hope</p>
         </NavbarBrand>
       </NavbarContent>
 
-      <NavbarContent className="hidden sm:flex gap-4" justify="center">
+      <NavbarContent className="hidden sm:flex gap-8" justify="center">
         {menuItems.map((item, index) => (
           <NavbarItem key={index} isActive={activeItem === item}>
             <Link

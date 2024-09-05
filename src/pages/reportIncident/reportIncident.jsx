@@ -5,7 +5,7 @@ import { useWriteContract} from 'wagmi';
 import { contractAbi, contractAddress } from '../../../constants';
 import { ethers } from 'ethers';
 
-function ReportIncident() {
+function ReportIncident({contractInstance}) {
     const [campaignImage, setCampaignImage] = useState(null);
     const { writeContract } = useWriteContract();
 
@@ -62,17 +62,13 @@ function ReportIncident() {
                 new Date(data.campaignDeadline).getTime() / 1000
             );
 
-            const tx = writeContract({
-                abi: contractAbi,
-                address: contractAddress,
-                functionName: 'createCampaign',
-                args: [
-                    (1e18 * data.campaignAmount).toString(),
-                    campaignUploadResponse.data.IpfsHash,
-                    data.campaignCategory,
-                    endTimeUnix,
-                ],
-            });
+            const tx = await contractInstance.createCampaign(
+                ethers.utils.parseEther(data.campaignAmount),
+                campaignUploadResponse.data.IpfsHash,
+                data.campaignCategory,
+                endTimeUnix
+              );
+              await tx.wait();
 
             console.log("TX is", tx)
 

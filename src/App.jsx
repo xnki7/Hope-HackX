@@ -74,7 +74,6 @@ function App() {
                     }
                     path="/reportIncident"
                 />
-                <Route element={<ReportIncident />} path="/reportIncident" />
             </Route>
         </Routes>
     );
