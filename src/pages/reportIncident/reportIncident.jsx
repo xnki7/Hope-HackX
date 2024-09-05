@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import axios from 'axios';
-import { useWriteContract} from 'wagmi';
-import { contractAbi, contractAddress } from '../../../constants';
 import { ethers } from 'ethers';
+import { getEthersSigner } from '../../signerEthers'
+import { config } from '../../config'
 
 function ReportIncident({contractInstance}) {
     const [campaignImage, setCampaignImage] = useState(null);
-    const { writeContract } = useWriteContract();
+    const signer = getEthersSigner(config)
 
     const {
         register,
@@ -61,8 +61,9 @@ function ReportIncident({contractInstance}) {
             const endTimeUnix = Math.floor(
                 new Date(data.campaignDeadline).getTime() / 1000
             );
-
-            const tx = await contractInstance.createCampaign(
+            
+            const contractInstanceWithSigner = contractInstance.connect(signer);
+            const tx = await contractInstanceWithSigner.createCampaign(
                 ethers.utils.parseEther(data.campaignAmount),
                 campaignUploadResponse.data.IpfsHash,
                 data.campaignCategory,
