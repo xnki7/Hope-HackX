@@ -55,9 +55,9 @@ function App() {
         loadChain();
     },[]);
 
-    return (
-        <Routes>
-            <Route
+      return (
+            <Routes>
+                  <Route
                 element={
                     <LandingLayout
                         setCreateProfileModal={setCreateProfileModal}
@@ -66,17 +66,18 @@ function App() {
                 }
                 path="/"
             >
-                <Route element={<Homepage />} path="/" />
-                <Route element={<CampaignsPage />} path="/campaigns" />
+                        <Route element={<Homepage />} path="/" />
+                        <Route element={<CampaignsPage />} path="/campaigns" />
+                        <Route element={<CampaignDetail />} path="/c/:campaignId" />
                 <Route
                     element={
                         <ReportIncident contractInstance={contractInstance} />
                     }
                     path="/reportIncident"
                 />
-            </Route>
-        </Routes>
-    );
+                  </Route>
+            </Routes>
+      );
 }
 
 export default App;
