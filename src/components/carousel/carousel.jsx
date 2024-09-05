@@ -38,7 +38,7 @@ const Carousel = () => {
     useEffect(() => {
         const timer = setTimeout(() => {
             nextSlide();
-        }, 5000);
+        }, 3000);
 
         return () => clearTimeout(timer);
     }, [currentSlide]);
@@ -68,7 +68,7 @@ const Slide = ({ img, bgColor, text }) => {
                 />
             </div>
             <div className="m-auto h-[50%] pt-2 w-[95%] px-[5%] text-center flex flex-col justify-between md:text-left">
-                <div className="font-bold text-3xl mb-3 text-center md:text-left md:text-4xl">
+                <div className="font-semibold text-3xl mb-3 text-center md:text-left md:text-4xl">
                 Make a Difference Today!
                 </div>
                 <div className="font-bold text-2xl mb-3 text-center md:text-left">
