@@ -4,8 +4,9 @@ import { ethers } from "ethers";
 
 const [signer, setSigner] = useState(null);
 const [contractInstance, setContractInstance] = useState(null)
+const [account, setAccount] = useState(null)
 
-const loadChain=async()=>{
+const loadChain = async()=>{
     
     try {
         if (window.ethereum) {
@@ -18,6 +19,9 @@ const loadChain=async()=>{
           signer
         );
         setContractInstance(contractInstance);
+        const address = await signer.getAddress();
+        console.log("Metamask Connected to " + address);
+        setAccount(address);
       } else {
         const provider = new ethers.providers.Web3Provider(publicProvider);
         const signer = provider.getSigner();
@@ -28,6 +32,9 @@ const loadChain=async()=>{
           signer
         );
         setContractInstance(contractInstance);
+        const address = await signer.getAddress();
+        console.log("Metamask Connected to " + address);
+        setAccount(address);
       }
     } catch (error) {
         console.log(error);
