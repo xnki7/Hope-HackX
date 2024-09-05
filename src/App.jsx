@@ -1,6 +1,7 @@
 import { Route, Routes } from 'react-router-dom';
 import LandingLayout from './layouts/landing-layout.jsx';
-import CampaignsPage from './pages/campaigns-page.jsx';
+import CampaignsPage from './pages/campaigns-page/campaigns-page.jsx';
+import CampaignDetail from "./pages/campaign-detail/campaign-detail.jsx"
 import Homepage from './pages/homepage/homepage.jsx';
 import ReportIncident from './pages/reportIncident/reportIncident.jsx';
 import { useState, useEffect } from 'react';
