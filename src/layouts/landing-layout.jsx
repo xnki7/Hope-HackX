@@ -1,10 +1,12 @@
+import { Outlet } from "react-router-dom";
 import AppNavbar from "../components/appNavbar/appNavbar";
+import ReportIncident from "../pages/reportIncident/reportIncident";
 
-const LandingLayout = ({ children }) => {
+const LandingLayout = () => {
   return (
     <div>
       <AppNavbar />
-      {children}
+      <Outlet/>
     </div>
   );
 };

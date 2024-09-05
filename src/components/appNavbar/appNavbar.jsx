@@ -16,7 +16,7 @@ export default function AppNavbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [activeItem, setActiveItem] = useState("Active Incidents"); // Default active item
 
-  const menuItems = ["Report", "Active Incidents", "Profile"];
+  const menuItems = ["Report Incident", "Active Incidents", "Profile"];
 
   const handleItemClick = (item) => {
     setActiveItem(item);
