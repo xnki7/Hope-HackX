@@ -7,7 +7,6 @@ import { useEffect, useState } from "react";
 import { useAccount } from "wagmi";
 
 import CreateProfile from "./pages/createProfile/createProfile.jsx";
-import { useState } from "react";
 function App() {
 
 const [signer, setSigner] = useState(null);
