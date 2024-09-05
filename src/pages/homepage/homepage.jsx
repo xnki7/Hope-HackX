@@ -3,10 +3,7 @@ import { useEffect } from 'react';
 
 function Homepage() {
     useEffect(() => {
-        // Disable scrolling on component mount
         document.body.style.overflow = 'hidden';
-
-        // Re-enable scrolling on component unmount
         return () => {
             document.body.style.overflow = 'auto';
         };
