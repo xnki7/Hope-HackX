@@ -70,7 +70,7 @@ function App() {
                 path="/"
             >
                         <Route element={<Homepage />} path="/" />
-                        <Route element={<CampaignsPage />} path="/campaigns" />
+                        <Route element={<CampaignsPage contractInstance={contractInstance}/>} path="/campaigns" />
                         <Route element={<CampaignDetail />} path="/c/:campaignId" />
                 <Route
                     element={
