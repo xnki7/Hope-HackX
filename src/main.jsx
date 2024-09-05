@@ -24,7 +24,9 @@ createRoot(document.getElementById("root")).render(
       <RainbowKitProvider>
         <StrictMode>
           <NextUIProvider>
-            <App />
+            <main className="dark text-foreground bg-background">
+              <App />
+            </main>
           </NextUIProvider>
         </StrictMode>
       </RainbowKitProvider>
