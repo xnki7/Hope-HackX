@@ -2,12 +2,12 @@ import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import axios from 'axios';
 import { ethers } from 'ethers';
-import { getEthersSigner } from '../../signerEthers'
-import { config } from '../../config'
+import { useWriteContract } from 'wagmi';
+import { contractAbi, contractAddress } from '../../../constants.js';
 
-function ReportIncident({contractInstance}) {
+function ReportIncident({ contractInstance }) {
     const [campaignImage, setCampaignImage] = useState(null);
-    const signer = getEthersSigner(config)
+    const { writeContract } = useWriteContract();
 
     const {
         register,
@@ -61,19 +61,19 @@ function ReportIncident({contractInstance}) {
             const endTimeUnix = Math.floor(
                 new Date(data.campaignDeadline).getTime() / 1000
             );
-            
-            const contractInstanceWithSigner = contractInstance.connect(signer);
-            const tx = await contractInstanceWithSigner.createCampaign(
-                ethers.utils.parseEther(data.campaignAmount),
-                campaignUploadResponse.data.IpfsHash,
-                data.campaignCategory,
-                endTimeUnix
-              );
-              await tx.wait();
 
-            console.log("TX is", tx)
+            writeContract({
+                abi: contractAbi,
+                address: contractAddress,
+                functionName: 'createCampaign',
+                args: [
+                    ethers.utils.parseEther(data.campaignAmount),
+                    campaignUploadResponse.data.IpfsHash,
+                    data.campaignCategory,
+                    endTimeUnix,
+                ],
+            });
 
-            alert('Campaign created ✅');
         } catch (error) {
             console.error('Error in campaign creation:', error);
         }
