@@ -4,10 +4,9 @@ const CampaignsPage = ({contractInstance}) => {
   const [campaigns, setCampaigns] = useState([]);
 
   const getListedCampaigns = async()=>{
-    const tx = await contractInstance.getListedCampaigns();
-    setCampaigns(tx);
+    
   }
-  
+
   const getMyCampaigns = async()=>{}
   const getRemainingAmount = async(campaignId)=>{}
   const getRemainingTime = async(campaignId)=>{}
