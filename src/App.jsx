@@ -84,7 +84,7 @@ function App() {
             >
                         <Route element={<Homepage />} path="/" />
                         <Route element={<CampaignsPage contractInstance={contractInstance}/>} path="/campaigns" />
-                        <Route element={<CampaignDetail />} path="/campaigns/:campaignId" />
+                        <Route element={<CampaignDetail contract={contractInstance} />} path="/campaigns/:campaignId" />
                 <Route
                     element={
                         <ReportIncident contractInstance={contractInstance} />
