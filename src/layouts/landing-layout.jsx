@@ -2,6 +2,7 @@ import { Outlet } from "react-router-dom";
 import AppNavbar from "../components/appNavbar/appNavbar";
 import CreateProfile from "../pages/createProfile/createProfile";
 import Loader from "../components/Loader/Loader";
+import Chatbot from "../components/ChatBot/chatBot";
 
 const LandingLayout = ({setCreateProfileModal, createProfileModal, contractInstance, signer, loading}) => {
   return (
@@ -9,6 +10,7 @@ const LandingLayout = ({setCreateProfileModal, createProfileModal, contractInsta
       {loading ? <Loader/> : null}
       <AppNavbar setCreateProfileModal={setCreateProfileModal} createProfileModal={createProfileModal}/>
       <CreateProfile setCreateProfileModal={setCreateProfileModal} createProfileModal={createProfileModal} contractInstance={contractInstance} signer={signer}/>
+      <Chatbot/>
       <Outlet/>
     </div>
   );
