@@ -24,6 +24,10 @@ export default function AppNavbar({setCreateProfileModal, createProfileModal}) {
       console.log("hello")
       setCreateProfileModal(true);
       console.log(createProfileModal)
+    }else if (item === "Report Incident") {
+      window.location.href = "/reportIncident"; 
+    }else if (item == "Active Incidents"){
+      window.location.href = "/campaigns"
     }
   };
 
@@ -35,8 +39,10 @@ export default function AppNavbar({setCreateProfileModal, createProfileModal}) {
           className="sm:hidden"
         />
         <NavbarBrand>
+          <Link href="/">
           <img src={logo} className="h-16 w-16 mr-2" alt="" />
           <p className="font-bold text-xl text-inherit">Hope</p>
+          </Link>
         </NavbarBrand>
       </NavbarContent>
 
@@ -45,7 +51,6 @@ export default function AppNavbar({setCreateProfileModal, createProfileModal}) {
           <NavbarItem key={index} isActive={activeItem === item}>
             <Link
               color={activeItem === item ? "primary" : "foreground"}
-              href="#"
               onPress={() => handleItemClick(item)}
             >
               {item}
