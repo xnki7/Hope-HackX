@@ -9,23 +9,23 @@ const Carousel = () => {
     const slidesData = [
         {
             img: img1,
-            bgColor: 'bg-white',
+            bgColor: 'bg-[#FFFAF0]', // Light cream
         },
         {
             img: img2,
-            bgColor: 'bg-white',
+            bgColor: 'bg-[#F0FFF0]', // Light green
         },
         {
             img: img3,
-            bgColor: 'bg-white',
+            bgColor: 'bg-[#F0F8FF]', // Light blue
         },
         {
             img: img4,
-            bgColor: 'bg-white',
+            bgColor: 'bg-[#FFF5EE]', // Light peach
         },
         {
             img: img5,
-            bgColor: 'bg-white',
+            bgColor: 'bg-[#FAEBD7]', // Light almond
         },
     ];
 

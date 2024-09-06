@@ -1,6 +1,7 @@
 import { Progress } from '@nextui-org/react';
 
-export default function ProgressBar() {
+export default function ProgressBar({value, goalAmount}) {
+    value != NaN ? value: 0
     return (
         <Progress
             size="sm"
@@ -12,8 +13,8 @@ export default function ProgressBar() {
                 label: 'tracking-wider font-medium text-default-600',
                 value: 'text-foreground/60',
             }}
-            label={`Goal: 2 matic`}
-            value={65}
+            label={`Goal: ${goalAmount} matic`}
+            value={value}
             showValueLabel={true}
         />
     );

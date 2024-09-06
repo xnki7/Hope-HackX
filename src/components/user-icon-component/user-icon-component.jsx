@@ -1,13 +1,13 @@
 import { User } from "@nextui-org/react";
 
-const UserIconComponent = () => {
+const UserIconComponent = ({username, img}) => {
   return (
     <User
       className=""
-      name="Jane Doe"
-      description="Product Designer"
+      name={username}
+      description="Creator"
       avatarProps={{
-        src: "https://i.pravatar.cc/150?u=a04258114e29026702d",
+        src: `https://ipfs.io/ipfs/${img}`,
       }}
     />
   );

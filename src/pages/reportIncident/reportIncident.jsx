@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import axios from 'axios';
-import { useWriteContract} from 'wagmi';
-import { contractAbi, contractAddress } from '../../../constants';
 import { ethers } from 'ethers';
+import { useWriteContract } from 'wagmi';
+import { contractAbi, contractAddress } from '../../../constants.js';
 
-function ReportIncident() {
+function ReportIncident({ contractInstance, setLoading }) {
     const [campaignImage, setCampaignImage] = useState(null);
     const { writeContract } = useWriteContract();
 
@@ -19,6 +19,7 @@ function ReportIncident() {
         console.log('Form Data: ', data);
 
         try {
+            setLoading(true);
             // Upload Image to Pinata
             const formData = new FormData();
             formData.append('file', campaignImage);
@@ -62,98 +63,123 @@ function ReportIncident() {
                 new Date(data.campaignDeadline).getTime() / 1000
             );
 
-            const tx = writeContract({
+            writeContract({
                 abi: contractAbi,
                 address: contractAddress,
                 functionName: 'createCampaign',
                 args: [
-                    (1e18 * data.campaignAmount).toString(),
+                    ethers.utils.parseEther(data.campaignAmount),
                     campaignUploadResponse.data.IpfsHash,
                     data.campaignCategory,
                     endTimeUnix,
                 ],
             });
-
-            console.log("TX is", tx)
-
-            alert('Campaign created ✅');
         } catch (error) {
             console.error('Error in campaign creation:', error);
+        } finally{
+            setLoading(false)
         }
     };
 
     return (
-        <div className="new-campaign-form">
+        <div className="max-w-lg mx-auto p-6 bg-white shadow-md rounded-lg">
             <form onSubmit={handleSubmit(reportIncident)}>
-                <h1>Create a New Campaign</h1>
+                <h1 className="text-2xl font-bold text-center mb-6">
+                    Create a New Campaign
+                </h1>
 
                 {/* Campaign Title */}
-                <div className="form-group">
-                    <label>Campaign Title *</label>
+                <div className="mb-4">
+                    <label className="block text-sm font-medium text-gray-700">
+                        Campaign Title *
+                    </label>
                     <input
                         type="text"
                         {...register('campaignTitle', {
                             required: 'Campaign Title is required',
                         })}
+                        className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                     />
                     {errors.campaignTitle && (
-                        <p className="error">{errors.campaignTitle.message}</p>
+                        <p className="text-red-500 text-sm mt-1">
+                            {errors.campaignTitle.message}
+                        </p>
                     )}
                 </div>
 
                 {/* Required Fund */}
-                <div className="form-group">
-                    <label>Required Fund (in MATIC) *</label>
+                <div className="mb-4">
+                    <label className="block text-sm font-medium text-gray-700">
+                        Required Fund (in MATIC) *
+                    </label>
                     <input
                         type="number"
+                        step="any"
                         {...register('campaignAmount', {
                             required: 'Campaign Amount is required',
+                            min: {
+                                value: 0,
+                                message:
+                                    'Campaign Amount must be greater than 0',
+                            },
                         })}
+                        className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                     />
                     {errors.campaignAmount && (
-                        <p className="error">{errors.campaignAmount.message}</p>
+                        <p className="text-red-500 text-sm mt-1">
+                            {errors.campaignAmount.message}
+                        </p>
                     )}
                 </div>
 
                 {/* Campaign Description */}
-                <div className="form-group">
-                    <label>Tell Your Story *</label>
+                <div className="mb-4">
+                    <label className="block text-sm font-medium text-gray-700">
+                        Tell Your Story *
+                    </label>
                     <textarea
                         rows="7"
                         {...register('campaignDescription', {
                             required: 'Campaign Description is required',
                         })}
+                        className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                     ></textarea>
                     {errors.campaignDescription && (
-                        <p className="error">
+                        <p className="text-red-500 text-sm mt-1">
                             {errors.campaignDescription.message}
                         </p>
                     )}
                 </div>
 
                 {/* End Date */}
-                <div className="form-group">
-                    <label>End Date *</label>
+                <div className="mb-4">
+                    <label className="block text-sm font-medium text-gray-700">
+                        End Date *
+                    </label>
                     <input
                         type="date"
                         {...register('campaignDeadline', {
                             required: 'Campaign Deadline is required',
                         })}
+                        className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                     />
                     {errors.campaignDeadline && (
-                        <p className="error">
+                        <p className="text-red-500 text-sm mt-1">
                             {errors.campaignDeadline.message}
                         </p>
                     )}
                 </div>
 
                 {/* Campaign Category */}
-                <div className="form-group">
-                    <label>Campaign Category *</label>
+                <div className="mb-4">
+                    <label className="block text-sm font-medium text-gray-700">
+                        Campaign Category *
+                    </label>
                     <select
                         {...register('campaignCategory', {
                             required: 'Campaign Category is required',
                         })}
+                        className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                     >
                         <option value="">Select a category</option>
                         <option value="Education">Education</option>
@@ -162,15 +188,17 @@ function ReportIncident() {
                         {/* Add more categories as needed */}
                     </select>
                     {errors.campaignCategory && (
-                        <p className="error">
+                        <p className="text-red-500 text-sm mt-1">
                             {errors.campaignCategory.message}
                         </p>
                     )}
                 </div>
 
                 {/* Image Upload */}
-                <div className="form-group">
-                    <label>Campaign Image *</label>
+                <div className="mb-4">
+                    <label className="block text-sm font-medium text-gray-700">
+                        Campaign Image *
+                    </label>
                     <input
                         type="file"
                         accept="image/*"
@@ -178,14 +206,22 @@ function ReportIncident() {
                             required: 'Campaign Image is required',
                         })}
                         onChange={(e) => setCampaignImage(e.target.files[0])}
+                        className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                     />
                     {errors.campaignImage && (
-                        <p className="error">{errors.campaignImage.message}</p>
+                        <p className="text-red-500 text-sm mt-1">
+                            {errors.campaignImage.message}
+                        </p>
                     )}
                 </div>
 
                 {/* Submit Button */}
-                <button type="submit">Submit Campaign</button>
+                <button
+                    type="submit"
+                    className="w-full bg-indigo-600 text-white py-2 px-4 rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-opacity-50"
+                >
+                    Submit Campaign
+                </button>
             </form>
         </div>
     );

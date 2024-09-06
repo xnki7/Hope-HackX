@@ -1,30 +1,45 @@
 import { Route, Routes } from 'react-router-dom';
 import LandingLayout from './layouts/landing-layout.jsx';
-import CampaignsPage from './pages/campaigns-page.jsx';
+import CampaignsPage from './pages/campaigns-page/campaigns-page.jsx';
+import CampaignDetail from './pages/campaign-detail/campaign-detail.jsx';
 import Homepage from './pages/homepage/homepage.jsx';
 import ReportIncident from './pages/reportIncident/reportIncident.jsx';
 import { useState, useEffect } from 'react';
 import { useAccount } from 'wagmi';
 import { getEthersProvider } from './providerEthers.ts';
 import { config } from './config';
-import {ethers} from "ethers"
+import { ethers } from 'ethers';
 import { contractAddress, contractAbi } from '../constants.js';
+import { useWalletClient } from 'wagmi';
+import React from 'react';
 
 function App() {
     const [signer, setSigner] = useState(null);
     const [contractInstance, setContractInstance] = useState(null);
     const [account, setAccount] = useState(null);
     const [createProfileModal, setCreateProfileModal] = useState(false);
+    const [loading, setLoading] = useState(false)
 
     const accounts = useAccount();
     console.log('Account is ', accounts.address);
+
+    // const { data: walletClient } = useWalletClient();
+    // const ethersSigner = React.useMemo(
+    //     () =>
+    //         walletClient
+    //             ? new providers.Web3Provider(walletClient).getSigner()
+    //             : undefined,
+    //     [walletClient]
+    // );
+    // console.log('result is ', ethersSigner);
 
     const loadChain = async () => {
         try {
             if (window.ethereum) {
                 const provider = getEthersProvider(config);
-                const signer = provider.getSigner();
+                const signer = provider.getSigner(accounts.address);
                 setSigner(signer);
+                console.log("Signer is ", signer)
                 const contractInstance = new ethers.Contract(
                     contractAddress,
                     contractAbi,
@@ -53,7 +68,7 @@ function App() {
 
     useEffect(() => {
         loadChain();
-    },[]);
+    }, []);
 
     return (
         <Routes>
@@ -62,19 +77,23 @@ function App() {
                     <LandingLayout
                         setCreateProfileModal={setCreateProfileModal}
                         createProfileModal={createProfileModal}
+                        contractInstance={contractInstance}
+                        signer={signer}
+                        loading={loading}
+                        setLoading={setLoading}
                     />
                 }
                 path="/"
             >
-                <Route element={<Homepage />} path="/" />
-                <Route element={<CampaignsPage />} path="/campaigns" />
+                        <Route element={<Homepage />} path="/" />
+                        <Route element={<CampaignsPage contractInstance={contractInstance}/>} path="/campaigns" />
+                        <Route element={<CampaignDetail contract={contractInstance} setLoading={setLoading}/>} path="/campaigns/:campaignId" />
                 <Route
                     element={
-                        <ReportIncident contractInstance={contractInstance} />
+                        <ReportIncident contractInstance={contractInstance} setLoading={setLoading}/>
                     }
                     path="/reportIncident"
                 />
-                <Route element={<ReportIncident />} path="/reportIncident" />
             </Route>
         </Routes>
     );
