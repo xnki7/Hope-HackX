@@ -46,7 +46,7 @@ export default function AppNavbar({setCreateProfileModal, createProfileModal}) {
         </NavbarBrand>
       </NavbarContent>
 
-      <NavbarContent className="hidden sm:flex gap-8" justify="center">
+      <NavbarContent className="hidden sm:flex gap-8 cursor-pointer" justify="center">
         {menuItems.map((item, index) => (
           <NavbarItem key={index} isActive={activeItem === item}>
             <Link
