@@ -46,7 +46,7 @@ const CampaignCard = ({
     }, []);
 
     return (
-        <div className="border bg-gray-50 rounded-lg flex items-center gap-10 shadow-md pr-8 py-4">
+        <div className="border bg-gray-50 rounded-lg flex items-center gap-10 shadow-md py-4">
             <Image
                 isBlurred
                 src={img}
@@ -56,7 +56,7 @@ const CampaignCard = ({
                 height={200} // Setting a fixed height
                 style={{ objectFit: 'cover', width: '200px', height: '200px' }}
             />
-            <div className="flex flex-col items-start">
+            <div className="flex flex-col items-start w-max">
                 <UserIconComponent username={profileUsername} img={profilePic}/>
                 <h3 className="font-bold text-2xl text-primary mt-2">
                     {title && title.toString().length > 60
@@ -80,7 +80,7 @@ const CampaignCard = ({
                         goalAmount={parseInt(requiredAmount) / 1e18}
                     />
 
-                    <div className="flex justify-between font-semibold text-sm text-content1">
+                    <div className="flex justify-between gap-8 font-semibold text-sm text-content1">
                         <div>
                             Raised:{' '}
                             <span className="text-primary">
