@@ -18,6 +18,7 @@ function App() {
     const [contractInstance, setContractInstance] = useState(null);
     const [account, setAccount] = useState(null);
     const [createProfileModal, setCreateProfileModal] = useState(false);
+    const [loading, setLoading] = useState(false)
 
     const accounts = useAccount();
     console.log('Account is ', accounts.address);
@@ -78,16 +79,18 @@ function App() {
                         createProfileModal={createProfileModal}
                         contractInstance={contractInstance}
                         signer={signer}
+                        loading={loading}
+                        setLoading={setLoading}
                     />
                 }
                 path="/"
             >
                         <Route element={<Homepage />} path="/" />
                         <Route element={<CampaignsPage contractInstance={contractInstance}/>} path="/campaigns" />
-                        <Route element={<CampaignDetail contract={contractInstance} />} path="/campaigns/:campaignId" />
+                        <Route element={<CampaignDetail contract={contractInstance} setLoading={setLoading}/>} path="/campaigns/:campaignId" />
                 <Route
                     element={
-                        <ReportIncident contractInstance={contractInstance} />
+                        <ReportIncident contractInstance={contractInstance} setLoading={setLoading}/>
                     }
                     path="/reportIncident"
                 />

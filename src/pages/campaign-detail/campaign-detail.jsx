@@ -12,7 +12,7 @@ import { useWriteContract } from 'wagmi';
 import { contractAddress, contractAbi } from '../../../constants';
 import ProgressBar from '../../components/progress-bar/progress-bar';
 
-function CampaignDetail({ contract }) {
+function CampaignDetail({ contract, setLoading }) {
     const { campaignId } = useParams();
     const [campaign, setCampaign] = useState(null);
     const [currCampaign, setCurrCampaign] = useState(null);
@@ -21,7 +21,6 @@ function CampaignDetail({ contract }) {
     const [profileUsername, setProfileUsername] = useState(null);
     const [profilePic, setProfilePic] = useState(null);
     const [amount, setAmount] = useState(null);
-    const [loading, setLoading] = useState(false);
     const [donators, setDonators] = useState(null);
     const [isProfileCreated, setIsProfileCreated] = useState(false);
 
@@ -75,8 +74,8 @@ function CampaignDetail({ contract }) {
         const requiredAmount = currCampaign?.requiredAmount || 0;
         const remainingAmount = requiredAmount - raisedAmount;
         try {
+            setLoading(true)
             if (amount <= remainingAmount) {
-                setLoading(true);
                 // const tx = await contract.donateInCampaign(campaignId, {
                 //     // gasLimit: 900000,
                 //     value: ethers.utils.parseEther(amount),
@@ -90,10 +89,8 @@ function CampaignDetail({ contract }) {
                     args: [campaignId],
                     value: ethers.utils.parseEther(amount)
                 });
-                setLoading(false);
             }
         } catch (error) {
-            setLoading(false);
             console.log(error)
             if (!isProfileCreated) {
                 alert('Create a profile inorder to fund a camapign.');
@@ -104,6 +101,8 @@ function CampaignDetail({ contract }) {
                     } MATIC`
                 );
             }
+        } finally{
+            setLoading(false)
         }
     }, [contract, campaignId, amount, currCampaign]);
 
