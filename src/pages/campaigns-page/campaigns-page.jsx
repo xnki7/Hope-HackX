@@ -3,6 +3,7 @@ import { useReadContract } from 'wagmi';
 import { contractAddress, contractAbi } from '../../../constants';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 
 const CampaignsPage = ({ contractInstance }) => {
     const [campaigns, setCampaigns] = useState([]);
@@ -23,7 +24,9 @@ const CampaignsPage = ({ contractInstance }) => {
             const fetchCampaignURIs = async () => {
                 const details = await Promise.all(
                     listedCampaigns.map(async (campaign) => {
-                        const uri = await contractInstance.getCampaignURI(campaign.campaignId);
+                        const uri = await contractInstance.getCampaignURI(
+                            campaign.campaignId
+                        );
                         const metadata = await fetchCampaignMetadata(uri);
 
                         // Return full campaign data with metadata
@@ -34,7 +37,7 @@ const CampaignsPage = ({ contractInstance }) => {
                     })
                 );
                 setCampaignDetails(details); // Store full campaign details including metadata
-                console.log(details)
+                console.log(details);
             };
             fetchCampaignURIs();
         }
@@ -43,7 +46,9 @@ const CampaignsPage = ({ contractInstance }) => {
     // Fetch metadata from IPFS
     const fetchCampaignMetadata = async (campaignURI) => {
         try {
-            const response = await axios.get(`https://ipfs.io/ipfs/${campaignURI}`);
+            const response = await axios.get(
+                `https://ipfs.io/ipfs/${campaignURI}`
+            );
             return response.data;
         } catch (error) {
             console.error('Error fetching campaign metadata:', error);
@@ -54,17 +59,22 @@ const CampaignsPage = ({ contractInstance }) => {
     return (
         <div className="max-w-[95vw] mx-auto grid grid-cols-2 mt-6 gap-4">
             {campaignDetails.map((campaign) => (
-                <CampaignCard
-                    key={campaign.campaignId}
-                    campaignId={campaign.campaignId}
-                    contract={contractInstance}
-                    title={campaign.metadata.campaignTitle}
-                    description={campaign.metadata.campaignDescription}
-                    img={`https://ipfs.io/ipfs/${campaign.metadata.imageCID}`}
-                    campaignOwner={campaign.campaignOwner}
-                    campaignCategory={campaign.category}
-                    requiredAmount={campaign.requiredAmount}
-                />
+                <Link
+                    to={`/campaigns/${campaign.campaignId}`}
+                    style={{ textDecoration: 'none', color: '#000000' }}
+                >
+                    <CampaignCard
+                        key={campaign.campaignId}
+                        campaignId={campaign.campaignId}
+                        contract={contractInstance}
+                        title={campaign.metadata.campaignTitle}
+                        description={campaign.metadata.campaignDescription}
+                        img={`https://ipfs.io/ipfs/${campaign.metadata.imageCID}`}
+                        campaignOwner={campaign.campaignOwner}
+                        campaignCategory={campaign.category}
+                        requiredAmount={campaign.requiredAmount}
+                    />
+                </Link>
             ))}
         </div>
     );

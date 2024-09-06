@@ -76,12 +76,6 @@ const CreateProfile = ({
         image: null,
         bio: '',
     });
-    useEffect(() => {
-        document.body.style.overflow = 'hidden';
-        return () => {
-            document.body.style.overflow = '';
-        };
-    }, []);
     const handleChange = (e) => {
         const { name, type, value, files } = e.target;
         if (type === 'file') {
