@@ -84,7 +84,7 @@ const Slide = ({ img, bgColor, text }) => {
                     now!
                 </p>
                 <div className="text-white rounded bg-slate-950 w-max mx-auto py-2 px-4 mt-5 md:ml-0">
-                    Explore
+                    Connect Wallet to launch the app
                 </div>
             </div>
         </div>
