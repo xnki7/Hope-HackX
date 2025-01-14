@@ -2,7 +2,7 @@ import { Outlet } from "react-router-dom";
 import AppNavbar from "../components/appNavbar/appNavbar";
 import CreateProfile from "../pages/createProfile/createProfile";
 import Loader from "../components/Loader/Loader";
-import Chatbot from "../components/ChatBot/chatBot";
+import Chatbot from "../components/ChatBot/ChatBot";
 
 const LandingLayout = ({setCreateProfileModal, createProfileModal, contractInstance, signer, loading}) => {
   return (
