@@ -11,7 +11,7 @@ const Chatbot = () => {
                 'Hello👋, I am Chat AI. I will assist you with recent disasters.',
         },
         { type: 'queryHeader', message: 'Popular Queries:' },
-        { type: 'suggested', message: 'What is Earthquake?' },
+        { type: 'suggested', message: 'What is Earthquake ?' },
         {
             type: 'suggested',
             message:
