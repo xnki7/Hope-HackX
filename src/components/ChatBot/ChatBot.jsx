@@ -21,8 +21,7 @@ const Chatbot = () => {
     const [userMessage, setUserMessage] = useState('');
     const chatboxRef = useRef(null);
 
-    const A_KEY =
-    "";
+    const A_KEY =  import.meta.env.VITE_CHAT_BOT_KEY
 
     const createChatMessage = (message, type) => {
         return { message, type };
